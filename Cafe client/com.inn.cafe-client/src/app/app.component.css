@@ -1,0 +1,33 @@
+/* Social login section */
+.social-login {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .social-button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  
+  .google-button {
+    background-color: #db4437; /* Google red */
+  }
+  
+  .facebook-button {
+    background-color: #4267b2; /* Facebook blue */
+  }
+  
+  .google-button:hover {
+    background-color: #c23321;
+  }
+  
+  .facebook-button:hover {
+    background-color: #365899;
+  }
+  
