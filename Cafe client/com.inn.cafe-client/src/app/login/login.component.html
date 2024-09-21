@@ -1,21 +1,5 @@
-<div class="container">
+<div id="loginModal" *ngIf="!isSignupMode">
     <h1>Cafe Management</h1>
-  
-    <!-- Initial Buttons for Login and Signup -->
-    <div *ngIf="!showLoginForm && !showSignupForm">
-      <button (click)="showLogin()">Login</button>
-      <button (click)="showSignup()">Sign Up</button>
-  
-      <!-- Social Login Buttons -->
-      <!-- <div class="social-login">
-        <h3>Or login with</h3>
-        <button class="social-button google-button">Login with Google</button>
-        <button class="social-button facebook-button">Login with Facebook</button>
-      </div> -->
-    </div>
-  
-    <!-- Login Form -->
-    <div *ngIf="showLoginForm && !isLoggedIn">
       <h2>Login</h2>
       <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
         <label for="loginEmail">Email:</label>
@@ -29,6 +13,20 @@
         />
         <div *ngIf="loginForm.submitted && !loginForm.controls['loginEmail']?.valid">
           Email is required
+        </div>
+
+        <label for="loginUserName">UserName:</label>
+        <input
+          type="username"
+          id="loginUserName"
+          name="loginUserName"
+          ngModel
+          required
+          placeholder="Enter your UserName"
+        />
+
+        <div *ngIf="loginForm.submitted && !loginForm.controls['loginUserName']?.valid">
+          UserName is required
         </div>
   
         <label for="loginPassword">Password:</label>
@@ -46,48 +44,74 @@
   
         <button type="submit" [disabled]="!loginForm.valid">Login</button>
       </form>
+      <button (click)="showSignup()">Singup Instead if you don't have an account</button>
       <button (click)="hideForms()">Back</button>
+</div>
+
+    <div id="signup" *ngIf="isSignupMode">
+    
+        <h2>Sign Up</h2>
+        <form #signupForm="ngForm" (ngSubmit)="onSignup(signupForm)">
+          <label for="signupEmail">Email:</label>
+          <input
+            type="email"
+            id="signupEmail"
+            name="signupEmail"
+            ngModel
+            required
+            placeholder="Enter your email"
+          />
+          <div *ngIf="signupForm.submitted && !signupForm.controls['signupEmail']?.valid">
+            Email is required
+          </div>
+  
+          <label for="signupUserName">UserName:</label>
+          <input
+            type="username"
+            id="signupUserName"
+            name="signupUserName"
+            ngModel
+            required
+            placeholder="Enter your UserName"
+          />
+  
+          <div *ngIf="signupForm.submitted && !signupForm.controls['signupUserName']?.valid">
+            UserName is required
+          </div>
+    
+          <label for="signupPassword">Password:</label>
+          <input
+            type="password"
+            id="signupPassword"
+            name="signupPassword"
+            ngModel
+            required
+            placeholder="Enter your password"
+          />
+          <div *ngIf="signupForm.submitted && !signupForm.controls['signupPassword']?.valid">
+            Password is required
+          </div>
+  
+  
+          <label for="signupContactNumber">Phone:</label>
+          <input
+            type="phone"
+            id="signupContactNumber"
+            name="signupContactNumber"
+            ngModel
+            required
+            placeholder="Enter your Contact Number"
+          />
+  
+          <div *ngIf="signupForm.submitted && !signupForm.controls['signupContactNumber']?.valid">
+            Contact Number is required
+          </div>
+    
+          <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+        </form>
+        <button (click)="hideForms()">Back</button>
+
     </div>
   
-    <!-- Signup Form -->
-    <div *ngIf="showSignupForm && !isLoggedIn">
-      <h2>Sign Up</h2>
-      <form #signupForm="ngForm" (ngSubmit)="onSignup(signupForm)">
-        <label for="signupEmail">Email:</label>
-        <input
-          type="email"
-          id="signupEmail"
-          name="signupEmail"
-          ngModel
-          required
-          placeholder="Enter your email"
-        />
-        <div *ngIf="signupForm.submitted && !signupForm.controls['signupEmail']?.valid">
-          Email is required
-        </div>
-  
-        <label for="signupPassword">Password:</label>
-        <input
-          type="password"
-          id="signupPassword"
-          name="signupPassword"
-          ngModel
-          required
-          placeholder="Enter your password"
-        />
-        <div *ngIf="signupForm.submitted && !signupForm.controls['signupPassword']?.valid">
-          Password is required
-        </div>
-  
-        <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
-      </form>
-      <button (click)="hideForms()">Back</button>
-    </div>
-  
-    <!-- Welcome Section After Login -->
-    <div *ngIf="isLoggedIn">
-      <h2>Welcome, {{ loggedInEmail }}!</h2>
-      <button (click)="logout()">Logout</button>
-    </div>
-  </div>
+
   

@@ -1,0 +1,8 @@
+
+<div class="logo">MyCafe</div>
+<div class="nav-buttons">
+    <button id="loginBtn" *ngIf="!isLogedIn" routerLink="/login" style="float:right;">Login</button>
+    <button id="logoutBtn" *ngIf="isLogedIn" (click)="logout()">Logout</button>
+</div>
+
+
