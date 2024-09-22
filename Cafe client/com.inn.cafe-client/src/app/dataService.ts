@@ -14,4 +14,12 @@ export class DataService {
     login(params: loginRequestDTO) {
         return this.http.post<GenericResponse<loginResponseDTO>>('http://localhost:8080/user/login', params);
     }
+
+    socialLogin() {
+        window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    }
+
+    getSocialLoginUserData() {
+        return this.http.get('http://localhost:8080/user/getSocialLoginData');
+    }
 }

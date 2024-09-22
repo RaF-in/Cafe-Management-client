@@ -112,4 +112,8 @@ export class LoginComponent  {
     this.loggedInEmail = '';
     this.hideForms();
   }
+
+  loginWithGoogle() {
+    this.loginService.socialLogin();
+  }
 }

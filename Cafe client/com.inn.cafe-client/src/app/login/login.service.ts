@@ -30,6 +30,15 @@ export class LoginService {
           }))
     }
 
+    getSocialLoginUserData() {
+        return this.dataService.getSocialLoginUserData().pipe(catchError(err => this.handleError(err)), tap(resp => {
+            let response = (resp) as any;
+            if (response && response.data) {
+                this.emitUserLoggedIn(response.data);
+            }
+          }))
+    }
+
     handleError(err: any): any {
         throwError( () => err);
     }
@@ -63,5 +72,9 @@ export class LoginService {
         this.logoutTime = setTimeout(() => {
             this.logout();
         }, time)
+    }
+
+    socialLogin() {
+        this.dataService.socialLogin();
     }
 }
