@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
 import { Router} from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { loginResponseDTO } from '../ResponseDTO/loginResponseDTO';
 
 
 @Component({
@@ -14,6 +16,7 @@ import { Router} from '@angular/router';
   styleUrl: './login.component.css', 
 })
 export class LoginComponent  {
+
   isLoggedIn = false;
   loggedInEmail = '';
   showLoginForm = false;
@@ -24,8 +27,7 @@ export class LoginComponent  {
   authObs: Observable<any>;
   router: Router = inject(Router);
   isSignupMode: boolean = false;
-
-
+  
 
   // Handles showing the login form
   showLogin() {

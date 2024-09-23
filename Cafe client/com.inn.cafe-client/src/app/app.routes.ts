@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { SocialLoginHandleComponent } from './social-login-handle/social-login-handle.component';
+import { HandleSocialLoginComponent } from './handle-social-login/handle-social-login.component';
 
 export const routes: Route[] = [
     {
@@ -21,7 +21,7 @@ export const routes: Route[] = [
         component: HomeComponent
     },
     {
-        path: 'socialLoginHandle',
-        component: SocialLoginHandleComponent
+        path: 'handleSocialLogin',
+        component: HandleSocialLoginComponent
     }
 ];
