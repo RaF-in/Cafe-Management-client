@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { LoginService } from './login.service';
 import { Router} from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { loginResponseDTO } from '../ResponseDTO/loginResponseDTO';
 
 
 @Component({
@@ -106,13 +104,6 @@ export class LoginComponent  {
 
     this.handleLoginOrSignup(false);
     form.reset();
-  }
-
-  // Logout function
-  logout() {
-    this.isLoggedIn = false;
-    this.loggedInEmail = '';
-    this.hideForms();
   }
 
   loginWithGoogle() {

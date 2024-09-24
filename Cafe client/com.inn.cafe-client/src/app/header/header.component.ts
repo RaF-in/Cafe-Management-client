@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { LoginService } from '../login/login.service';
-import { exhaustMap, pipe, take } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,10 +11,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements OnInit {
-
-
   isLogedIn: boolean = false;
   loginService: LoginService = inject(LoginService);
+  router: Router = inject(Router);
 
   ngOnInit(): void {
     this.loginService.userSub.subscribe(res => {
@@ -29,6 +27,10 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.loginService.logout();
+  }
+
+  getUsers() {
+    this.router.navigateByUrl('getAllusers');
   }
 
 }

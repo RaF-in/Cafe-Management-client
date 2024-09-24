@@ -4,6 +4,7 @@ import { loginRequestDTO } from "../RequestDTO/loginRequestDTO";
 import { BehaviorSubject, catchError, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
 import { loginResponseDTO } from "../ResponseDTO/loginResponseDTO";
+import { CookieService } from "ngx-cookie-service";
 
 
 export class LoginService {
@@ -11,6 +12,7 @@ export class LoginService {
     userSub: BehaviorSubject<loginResponseDTO> = new BehaviorSubject<loginResponseDTO>(null);
     router: Router = inject(Router);
     logoutTime: any;
+    cookieService: CookieService = inject(CookieService);
 
     login(params: loginRequestDTO) {
         return this.dataService.login(params).pipe(catchError(err => this.handleError(err)), tap(resp => {
@@ -48,6 +50,13 @@ export class LoginService {
         localStorage.clear();
         this.router.navigateByUrl("/login");
         clearTimeout(this.logoutTime);
+        this.clearCafeCookies();
+    }
+
+    clearCafeCookies() {
+        this.cookieService.delete('jwtToken');  // JWT token
+        this.cookieService.delete('email');
+        this.cookieService.delete('expiresIn');
     }
 
     emitUserLoggedIn(data) {

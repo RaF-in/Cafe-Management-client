@@ -22,4 +22,8 @@ export class DataService {
     getSocialLoginUserData() {
         return this.http.get('http://localhost:8080/user/getSocialLoginData');
     }
+
+    getUsers() {
+        return this.http.get('http://localhost:8080/user/getAllUsers');
+    }
 }

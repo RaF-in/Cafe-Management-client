@@ -3,6 +3,7 @@
 <div class="nav-buttons">
     <button id="loginBtn" *ngIf="!isLogedIn" routerLink="/login" style="float:right;">Login</button>
     <button id="logoutBtn" *ngIf="isLogedIn" (click)="logout()">Logout</button>
+    <button id="logoutBtn" *ngIf="isLogedIn" (click)="getUsers()">Get All Users</button>
 </div>
 
 
