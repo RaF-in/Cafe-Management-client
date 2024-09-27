@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { LoginService } from '../login/login.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../AuthService';
 
 @Component({
   selector: 'app-header',
@@ -14,9 +15,10 @@ export class HeaderComponent implements OnInit {
   isLogedIn: boolean = false;
   loginService: LoginService = inject(LoginService);
   router: Router = inject(Router);
+  authService: AuthService = inject(AuthService);
 
   ngOnInit(): void {
-    this.loginService.userSub.subscribe(res => {
+    this.authService.userSub.subscribe(res => {
       if (res) {
         this.isLogedIn = true;
       } else {
@@ -26,7 +28,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.loginService.logout();
+    this.authService.logout();
   }
 
   getUsers() {

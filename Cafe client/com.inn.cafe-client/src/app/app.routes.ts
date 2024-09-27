@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HandleSocialLoginComponent } from './handle-social-login/handle-social-login.component';
 import { CafeUsersComponent } from './cafe-users/cafe-users.component';
+import { canActivate } from './RouteGuards/authRoute';
 
 export const routes: Route[] = [
     {
@@ -27,6 +28,8 @@ export const routes: Route[] = [
     },
     {
         path: 'getAllusers',
-        component: CafeUsersComponent
+        // lazy load
+        loadComponent: ()=> import('./cafe-users/cafe-users.component').then(com => com.CafeUsersComponent),
+        canActivate: [canActivate]
     }
 ];

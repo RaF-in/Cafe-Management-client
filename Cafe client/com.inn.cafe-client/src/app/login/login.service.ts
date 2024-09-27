@@ -1,15 +1,19 @@
-import { inject } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { DataService } from "../dataService";
 import { loginRequestDTO } from "../RequestDTO/loginRequestDTO";
 import { BehaviorSubject, catchError, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
 import { loginResponseDTO } from "../ResponseDTO/loginResponseDTO";
 import { CookieService } from "ngx-cookie-service";
+import { AuthService } from "../AuthService";
 
+@Injectable({
+    providedIn: 'root'
+})
 
 export class LoginService {
     dataService: DataService = inject(DataService);
-    userSub: BehaviorSubject<loginResponseDTO> = new BehaviorSubject<loginResponseDTO>(null);
+    authService: AuthService = inject(AuthService);
     router: Router = inject(Router);
     logoutTime: any;
     cookieService: CookieService = inject(CookieService);
@@ -18,7 +22,7 @@ export class LoginService {
         return this.dataService.login(params).pipe(catchError(err => this.handleError(err)), tap(resp => {
             let response = (resp) as any;
             if (response && response.data) {
-                this.emitUserLoggedIn(response.data);
+                this.authService.emitUserLoggedIn(response.data);
             }
           }));
     }
@@ -27,7 +31,7 @@ export class LoginService {
         return this.dataService.signup(params).pipe(catchError(err => this.handleError(err)), tap(resp => {
             let response = (resp) as any;
             if (response && response.data) {
-                this.emitUserLoggedIn(response.data);
+                this.authService.emitUserLoggedIn(response.data);
             }
           }))
     }
@@ -36,51 +40,13 @@ export class LoginService {
         return this.dataService.getSocialLoginUserData().pipe(catchError(err => this.handleError(err)), tap(resp => {
             let response = (resp) as any;
             if (response && response.data) {
-                this.emitUserLoggedIn(response.data);
+                this.authService.emitUserLoggedIn(response.data);
             }
           }))
     }
 
     handleError(err: any): any {
         throwError( () => err);
-    }
-
-    logout() {
-        this.userSub.next(null);
-        localStorage.clear();
-        this.router.navigateByUrl("/login");
-        clearTimeout(this.logoutTime);
-        this.clearCafeCookies();
-    }
-
-    clearCafeCookies() {
-        this.cookieService.delete('jwtToken');  // JWT token
-        this.cookieService.delete('email');
-        this.cookieService.delete('expiresIn');
-    }
-
-    emitUserLoggedIn(data) {
-        this.userSub.next(data);
-        this.autoLogout(new Date(data.expiresIn).getTime() - new Date().getTime());
-        console.log(data);
-        localStorage.setItem("user", JSON.stringify(data));
-    }
-
-    autoLogin() {
-        let userData: loginResponseDTO = JSON.parse(localStorage.getItem('user'));
-        if (!userData) {
-            return;
-        }
-        if (userData && new Date(userData.expiresIn) > new Date) {
-            this.userSub.next(userData);
-            this.autoLogout(new Date(userData.expiresIn).getTime() - new Date().getTime());
-        }
-    }
-
-    autoLogout(time) {
-        this.logoutTime = setTimeout(() => {
-            this.logout();
-        }, time)
     }
 
     socialLogin() {

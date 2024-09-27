@@ -1,12 +1,20 @@
-import { HttpClient } from "@angular/common/http";
-import { inject } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
 import { GenericResponse } from "./ResponseDTO/GenericResponse";
 import { loginResponseDTO } from "./ResponseDTO/loginResponseDTO";
 import { loginRequestDTO } from "./RequestDTO/loginRequestDTO";
-import { Observable } from "rxjs";
+import { exhaustMap, Observable, take } from "rxjs";
+import { User } from "./domain/User";
+import { LoginService } from "./login/login.service";
+
+@Injectable({
+    providedIn: 'root'
+  })
 
 export class DataService {
+
     http: HttpClient = inject(HttpClient);
+
     signup(params: Map<string, string>) {
         return this.http.post<GenericResponse<string>>('http://localhost:8080/user/signup', params);
     }
@@ -24,6 +32,10 @@ export class DataService {
     }
 
     getUsers() {
-        return this.http.get('http://localhost:8080/user/getAllUsers');
+        return this.doCall<GenericResponse<User[]>>('http://localhost:8080/user/getAllUsers');
     }
+
+    doCall<T>(url: string, params?: T) {
+        return this.http.get(url, params);
+    } 
 }

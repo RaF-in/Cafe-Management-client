@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from '../login/login.service';
 import { loginResponseDTO } from '../ResponseDTO/loginResponseDTO';
 import { Router } from '@angular/router';
+import { AuthService } from '../AuthService';
 
 @Component({
   selector: 'app-handle-social-login',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class HandleSocialLoginComponent implements OnInit {
   cookieService: CookieService = inject(CookieService);
-  loginService: LoginService = inject(LoginService);
+  authService: AuthService = inject(AuthService);
   router: Router = inject(Router);
   ngOnInit(): void {
     const email = this.cookieService.get('email');
@@ -29,7 +30,7 @@ export class HandleSocialLoginComponent implements OnInit {
     if (email && jwtToken && expiresIn) {
       let resp: loginResponseDTO = {};
       resp.email = email;resp.jwtToken = jwtToken;resp.expiresIn = expiresIn;
-      this.loginService.emitUserLoggedIn(resp);
+      this.authService.emitUserLoggedIn(resp);
       this.router.navigateByUrl('home');
     }
   }
